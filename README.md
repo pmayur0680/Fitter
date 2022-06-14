@@ -17,6 +17,7 @@ For people passionate about fitness and health, social networks can be a great w
 
 ## Deployment
 
+Code Repo: https://github.com/pmayur0680/Fitter
 Deployed Application: https://fitter-bc2022.herokuapp.com/
 
 ## Project Requirements
