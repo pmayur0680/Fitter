@@ -3,7 +3,15 @@ export function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
-export function validatePassword(password) {
-    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})$/;
-    return re.test(String(password).toLowerCase());
+export function StrengthChecker(password) {
+    let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})');
+    let mediumPassword = new RegExp('(?=.*[a-z])(?=.*[0-9])(?=.{6,})');
+    
+    if(strongPassword.test(password)) {
+        return 'Strong';
+    } else if(mediumPassword.test(password)) {
+        return 'Medium';
+    } else {
+        return 'Weak';
+    }
 }

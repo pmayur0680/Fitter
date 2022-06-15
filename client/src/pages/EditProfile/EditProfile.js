@@ -97,6 +97,10 @@ import {
         isPrivate = isPrivate === "1" ? true: false;
         const { data } = await updateUser({          
           variables: { username, email, isPrivate, weight, height, age, gender },
+          refetchQueries: [
+            {query: QUERY_ME},
+            'posts'
+          ]
         });     
         if (error) {
           throw new Error('something went wrong!');

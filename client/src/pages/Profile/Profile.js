@@ -76,7 +76,7 @@ import {
     const { loading, error, data } = useQuery(QUERY_ME);    
     const user = data?.me || {};    
     
-    //console.log(user)
+  //  console.log(user)
   // MOVE USECOLORMODEVALUE TO VARIABLES SET BEFORE IF STATEMENT
   if(loading){
       return (
@@ -200,12 +200,10 @@ import {
                 // add post
               />
              { user.posts.length > 0 &&                
-              <UnorderedList>
-                {user.posts.map( (item) => (
-                    <ListItem key={item.id}>
-                          {item.createdAt}
-                          </ListItem>
-                ))}
+              <UnorderedList>                
+                    <ListItem>
+                      <a href='/posts'>{user.posts[0].createdAt}</a>
+                          </ListItem>                
               </UnorderedList>
               }
               <Link as={RouterLink} to='/posts'>

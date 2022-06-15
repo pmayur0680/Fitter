@@ -46,7 +46,7 @@ export const QUERY_ME = gql`
         }
       }
 
-      posts {
+      posts  {
             id
             postAuthor
             message

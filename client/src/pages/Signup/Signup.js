@@ -27,15 +27,35 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { ADD_USER } from '../../utils/mutations'
-import { validatePassword } from '../../utils/helpers'
+import { StrengthChecker } from '../../utils/helpers'
 
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
+  const [weakPassword, setWeakPasswordMessage] = useState(false);
+  const [mediumPassword, setMediumPasswordMessage] = useState(false);
+  const [strongPassword, setStrongPasswordMessage] = useState(false);
   const [addUser, { error }] = useMutation(ADD_USER);
 //   need to add BMI/Fitness goal input options
   const [errorMessage, setErrorMessage] = useState('');
-
+  function checkPasswordStrength(val) {
+    console.log(StrengthChecker(val));
+    if (StrengthChecker(val) === "Weak" ) {
+      setWeakPasswordMessage('Your password is weak!');
+      setMediumPasswordMessage('');
+      setStrongPasswordMessage('');
+    }
+    else if (StrengthChecker(val) === "Medium" ) {
+      setMediumPasswordMessage('Your password is medium.');
+      setWeakPasswordMessage('');
+      setStrongPasswordMessage('');
+    }
+    else if (StrengthChecker(val) === "Strong" ) {
+      setStrongPasswordMessage('Your password is strong.');
+      setWeakPasswordMessage('');
+      setMediumPasswordMessage('');
+    }
+  }
   // create form variables
   const formik = useFormik({
     initialValues: {
@@ -43,12 +63,7 @@ export default function SignupCard() {
       email: '',
       password: '',
     },
-    onSubmit: async ({ username, email, password}) => {     
-       // if (!validatePassword(password)) {
-        //   setErrorMessage(`Password must be at least 8 characters long and contain one uppercase, 
-        //   one lowercase, one number and one special case character!`);
-        //   return;
-        // }
+    onSubmit: async ({ username, email, password}) => {           
       try {       
         // setErrorMessage('');
         console.log('before addUser')
@@ -118,7 +133,10 @@ export default function SignupCard() {
                     name='password'
                     type={showPassword ? 'text' : 'password'} 
                     variant='filled'
-                    onChange={formik.handleChange}
+                    onChange={ (e) => {
+                      formik.handleChange(e);
+                      checkPasswordStrength(e.currentTarget.value);                      
+                    }}
                     value={formik.values.password}
                   />
                   <InputRightElement h={'full'}>
@@ -131,6 +149,30 @@ export default function SignupCard() {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
+                {weakPassword && (
+                        <Stack spacing={3} mt={3}>
+                            <Alert status='error'>
+                            <AlertIcon />
+                            {weakPassword}
+                          </Alert>
+                          </Stack>  
+                          )}    
+                {mediumPassword && (
+                        <Stack spacing={3} mt={3}>
+                            <Alert status='warning'>
+                            <AlertIcon />
+                            {mediumPassword}
+                          </Alert>
+                          </Stack>  
+                          )}  
+                 {strongPassword && (
+                        <Stack spacing={3} mt={3}>
+                            <Alert status='success'>
+                            <AlertIcon />
+                            {strongPassword}
+                          </Alert>
+                          </Stack>  
+                          )}                                                       
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
@@ -153,22 +195,8 @@ export default function SignupCard() {
                             {errorMessage}
                           </Alert>
                           </Stack>  
-                          )} 
-            <Stack spacing={2} align={'center'} maxW={'md'} w={'full'}>
-                  {/* Facebook */}
-              <Button w={'full'} colorScheme={'facebook'} leftIcon={<FaFacebook />}>
-                <Center>
-                  <Text>Continue with Facebook</Text>
-                </Center>
-              </Button>
-
-              {/* Google */}
-              <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
-                <Center>
-                  <Text>Sign in with Google</Text>
-                </Center>
-              </Button>
-            </Stack>
+                          )}    
+                                            
             <Stack pt={6}>
               <Text align={'center'}>
                 Already a user? <Link as={RouterLink} to='/login' color={'darkgreen'}>Log in</Link>

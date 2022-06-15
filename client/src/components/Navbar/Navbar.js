@@ -45,7 +45,7 @@ export default function Navbar() {
           <HStack spacing={8} alignItems={'center'}>
             <Box>
               <Link as={RouterLink} to='/'>
-                <Image boxSize='48px' objectFit='contain' src={logoImg} alt='Logo' />
+                <Image boxSize='48px' objectFit='contain' src={logoImg} alt='Fitter' />
               </Link>
             </Box>
             <HStack
@@ -53,9 +53,11 @@ export default function Navbar() {
               spacing={4}
               display={{ base: 'none', md: 'flex' }}
             >
+             {Auth.loggedIn() &&
               <Link as={RouterLink} to='/posts'>
                   <Button>Posts</Button>
               </Link>
+             }
               {Auth.loggedIn() &&
                 <Link as={RouterLink} to='/profile'>
                     <Button>Profile</Button>

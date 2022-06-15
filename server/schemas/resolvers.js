@@ -11,9 +11,7 @@ const resolvers = {
         .populate('mealPlan')
         .populate('exercisePlan')
         .populate('goals')
-        .populate({
-          path: 'posts', 
-          option: { 'createdAt': -1 } })
+        .populate({path: 'posts', options: { sort: { 'createdAt': -1 } } })
         .populate('friends')
         .select('-__v -password')              
         return userData;

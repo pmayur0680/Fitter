@@ -27,7 +27,7 @@ export default function CallToActionWithAnnotation() {
   }
 
   return (
-    <Container h={'73vh'}>
+    <Container>
       <Stack
         as={Box}
         textAlign={'center'}

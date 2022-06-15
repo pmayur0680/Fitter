@@ -1,4 +1,5 @@
 import React  from 'react';
+
 import {
     Flex,
     Box,
@@ -40,7 +41,6 @@ export default function SimpleCard() {
           variables: { email: values.email, password: values.password },
         });
         Auth.login(data.login.token);
-
       } catch (e) {
         console.error(e);
       }
@@ -120,22 +120,7 @@ export default function SimpleCard() {
                     bg: 'darkgreen',
                   }}>
                   Sign in
-                </Button>
-                <Stack spacing={2} align={'center'} maxW={'md'} w={'full'}>
-                  {/* Facebook */}
-                  <Button w={'full'} colorScheme={'facebook'} leftIcon={<FaFacebook />}>
-                    <Center>
-                      <Text>Continue with Facebook</Text>
-                    </Center>
-                  </Button>
-
-                  {/* Google */}
-                  <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
-                    <Center>
-                      <Text>Log in with Google</Text>
-                    </Center>
-                  </Button>
-                </Stack>
+                </Button>               
               </Stack>
             </form>
             {error && (
